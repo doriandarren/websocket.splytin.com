@@ -27,3 +27,24 @@ nodemon server.js
 ```
 
 
+
+
+Para ejecutar siempre el comando usar pm2:
+
+```sh
+
+// Instalar:
+npm install -g pm2
+
+// Start
+pm2 start server.js
+
+
+// Gestión:
+pm2 list
+pm2 stop <app-name-or-id>
+pm2 restart <app-name-or-id>
+pm2 logs <app-name-or-id>
+
+
+```

@@ -23,29 +23,49 @@ app.use('/static', express.static(join(process.cwd(), "public")));
 
 
 // Manejar conexiones WebSocket
-wss.on('connection', (ws) => {
-  console.log('Cliente conectado al WebSocket');
+wss.on('connection', (ws, req) => {
+  
+  let token = req.url.split('=')[1];
+  console.log(token);
 
-  // Manejar mensajes del cliente
-  ws.on('message', (message) => {
-    console.log(`Mensaje recibido: ${message}`);
+  if (token) {
 
-    // Enviar un mensaje de vuelta al cliente
-    ws.send(`Servidor: Recibí tu mensaje - ${message}`);
+    console.log('Cliente conectado al WebSocket');
 
-    // Enviar el mensaje a todos los clientes excepto al remitente
-    wss.clients.forEach((client) => {
-      if (client !== ws && client.readyState === WebSocket.OPEN) {
-        client.send(`Usuario: ${message}`);
-      }
+    // Manejar mensajes del cliente
+    ws.on('message', (message) => {
+      console.log(`Mensaje recibido: ${message}`);
+
+      // Enviar un mensaje de vuelta al cliente
+      ws.send(`Servidor: Recibí tu mensaje - ${message}`);
+
+      // Enviar el mensaje a todos los clientes excepto al remitente
+      wss.clients.forEach((client) => {
+        if (client !== ws && client.readyState === WebSocket.OPEN) {
+          client.send(`Usuario: ${message}`);
+        }
+      });
+
     });
 
-  });
+     // Manejar cierre de conexión
+    ws.on('close', () => {
+      console.log('Cliente desconectado del WebSocket');
+    });
 
-  // Manejar cierre de conexión
-  ws.on('close', () => {
-    console.log('Cliente desconectado del WebSocket');
-  });
+
+
+  } else {
+
+    console.log('Server: Token invalid. Close conexion.');
+    ws.send(`Server: Token invalid. Close conexion.`);
+    ws.close();
+
+  }
+
+  
+
+
 });
 
 // Ruta de prueba para mostrar un HTML con cliente WebSocket
