@@ -13,17 +13,15 @@ touch src/js/index.js
 touch src/css/index.css
 
 
-
-npm install ws
-
-
+Only dev:
 npm install -g nodemon
 
 
-npm install express ws
+npm install express http ws
+npm install tailwindcss postcss autoprefixer postcss-cli
 
 
-node src/main.js
+nodemon server.js
 
 
 ```

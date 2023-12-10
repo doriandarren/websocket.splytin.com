@@ -1,6 +1,7 @@
 const express = require('express');
 const http = require('http');
 const WebSocket = require('ws');
+const {join} = require('path');
 
 
 
@@ -18,6 +19,7 @@ const wss = new WebSocket.Server({
 //   res.end('Servidor HTTP en ejecución');
 // });
 
+app.use('/static', express.static(join(process.cwd(), "public")));
 
 
 // Manejar conexiones WebSocket
