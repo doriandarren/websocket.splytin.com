@@ -65,7 +65,7 @@ wss.on('connection', (ws, req) => {
 
 
       //Guardar mensaje en la base de datos
-      const query = 'INSERT INTO messages (username, message) VALUES (?, ?)';
+      const query = 'INSERT INTO chatapp (username, message) VALUES (?, ?)';
       db.query(query, [decoded.username, message], (err, result) => {
         if (err) {
           console.error('Error al guardar el mensaje:', err);
