@@ -2,6 +2,8 @@ const jwt = require('jsonwebtoken');
 
 const SECRET_KEY = 'token-public-123';
 
+
+
 const generateToken = (username) => {
   const payload = { username };
   const options = { expiresIn: '24h' };
