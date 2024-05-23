@@ -1,6 +1,27 @@
 ## Websocket
 
 
+### Arrancar el servidor
+Primero verificar los token de accesos. Para ejecutar esto se consigue primero el src/js/generateToken.js
+
+```sh
+node src/js/generateToken.js
+```
+
+Luego para arrancar el servidor:
+
+```sh
+nodemon server.js
+```
+
+
+
+
+
+
+
+
+
 ### Script
 
 ```sh
@@ -17,8 +38,16 @@ Only dev:
 npm install -g nodemon
 
 
-npm install express http ws
+npm install express http ws     // Servidor
+npm install jsonwebtoken        // TOKEN
+npm install mysql2              // MYSQL
+npm install dotenv              // .env
+
+
+
+
 npm install tailwindcss postcss autoprefixer postcss-cli
+
 
 
 nodemon server.js
