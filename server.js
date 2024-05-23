@@ -66,14 +66,14 @@ wss.on('connection', (ws, req) => {
 
 
       // Guardar mensaje en la base de datos
-      const query = 'INSERT INTO messages (username, message) VALUES (?, ?)';
-      db.query(query, [decoded.username, message], (err, result) => {
-        if (err) {
-          console.error('Error al guardar el mensaje:', err);
-          return;
-        }
-        //console.log('Mensaje guardado en la base de datos');
-      });
+      // const query = 'INSERT INTO messages (username, message) VALUES (?, ?)';
+      // db.query(query, [decoded.username, message], (err, result) => {
+      //   if (err) {
+      //     console.error('Error al guardar el mensaje:', err);
+      //     return;
+      //   }
+      //   //console.log('Mensaje guardado en la base de datos');
+      // });
 
 
 
