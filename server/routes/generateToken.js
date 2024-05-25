@@ -8,7 +8,7 @@ const generateToken = (username) => {
   const payload = { username };
   const options = { expiresIn: '24h' };
   const token = jwt.sign(payload, SECRET_KEY, options);
-  console.log(`Generated JWT Token for ${username}:`, token);
+  //console.log(`Generated JWT Token for ${username}:`, token);
   return token;
 };
 
