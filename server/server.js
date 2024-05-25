@@ -72,13 +72,12 @@ wss.on('connection', (ws, req) => {
     const decoded = jwt.verify(token, SECRET_KEY);
 
     if (!rooms[roomName]) {
-      ws.send('Server: Room does not exist.');
-      ws.close();
-      return;
+      rooms[roomName] = { users: new Set() }; // Crear la sala si no existe
     }
 
     rooms[roomName].users.add(decoded.username);
     ws.roomName = roomName;  // Asignar la sala al WebSocket
+    ws.username = decoded.username;  // Asignar el nombre de usuario al WebSocket
     console.log(`Cliente ${decoded.username} conectado a la sala ${roomName}`);
 
     ws.on('message', (message) => {
@@ -105,9 +104,7 @@ wss.on('connection', (ws, req) => {
     ws.on('close', () => {
       console.log(`Cliente ${decoded.username} desconectado de la sala ${roomName}`);
       rooms[roomName].users.delete(decoded.username);
-      if (rooms[roomName].users.size === 0) {
-        delete rooms[roomName];
-      }
+      // No eliminar la sala aunque no haya usuarios conectados
     });
 
     ws.on('error', (error) => {
