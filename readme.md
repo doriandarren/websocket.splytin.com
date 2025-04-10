@@ -1,56 +1,27 @@
-## Websocket
+# Project
 
 
-### Arrancar el servidor
-Primero verificar los token de accesos. Para ejecutar esto se consigue primero el src/js/generateToken.js
+## Installation
 
 ```sh
-node src/js/generateToken.js
+
+npm init -y
+
+npm i cors
+
+npm i dotenv  --> Hayq ue importar app.js: import 'dotenv/config'
+
+
 ```
 
-Luego para arrancar el servidor:
+
+## Run Server
 
 ```sh
-nodemon server.js
-```
 
+node app.js
 
-
-
-
-
-
-
-
-### Script
-
-```sh
-# Creamos las carpetas src y subcarpetas
-mkdir -p src/{assets,js,css}
-
-# Creamos los ficheros HTML, CSS y Javascript
-touch src/index.html
-touch src/js/index.js
-touch src/css/index.css
-
-
-Only dev:
-npm install -g nodemon
-
-
-npm install express http ws     // Servidor
-npm install jsonwebtoken        // TOKEN
-npm install mysql2              // MYSQL
-npm install dotenv              // .env
-
-
-
-
-npm install tailwindcss postcss autoprefixer postcss-cli
-
-
-
-nodemon server.js
+nodemon app.js
 
 
 ```
@@ -58,22 +29,31 @@ nodemon server.js
 
 
 
-Para ejecutar siempre el comando usar pm2:
+## Express
 
 ```sh
 
-// Instalar:
-npm install -g pm2
-
-// Start
-pm2 start server.js
-
-
-// Gestión:
-pm2 list
-pm2 stop <app-name-or-id>
-pm2 restart <app-name-or-id>
-pm2 logs <app-name-or-id>
+npm i express
 
 
 ```
+
+
+
+
+
+## Sockey io
+
+
+```sh
+
+npm i socket.io
+
+
+// Si todo va bien entrar al navegador: http://localhost:8080/socket.io/socket.io.js
+
+```
+
+
+
+
