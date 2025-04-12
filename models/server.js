@@ -15,7 +15,7 @@ export class MyServer {
 
         this.server = createServer(this.app);
         this.io = new Server(this.server, {
-            transports: ["websocket"], // 👈 Forzamos el uso exclusivo de WebSocket
+            //transports: ["websocket"], // 👈 Forzamos el uso exclusivo de WebSocket
             cors: {
                 origin: '*',
                 methods: ['GET', 'POST']
