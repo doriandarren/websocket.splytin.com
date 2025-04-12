@@ -9,7 +9,9 @@ const btnEnviar = document.querySelector('#btnEnviar');
 console.log("Archivo socket-client");
 
 
-const socket = io();
+const socket = io("http://localhost:8080", {
+  transports: ["websocket"]
+});
 
 console.log("socket", socket);
 
