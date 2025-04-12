@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { Server } from "socket.io";
 import { createServer } from 'http';
+import { send } from '../helpers/messageChannel.js';
 
 export class MyServer {
     
@@ -39,6 +40,9 @@ export class MyServer {
 
     routes() {
         this.app.get(this.paths.test, (req, res) => {
+
+            send('Controlador Test');
+
             res.json({
                 ok: true,
                 mensaje: 'Servidor funcionando correctamente ✅'
@@ -48,6 +52,9 @@ export class MyServer {
         // podés agregar más rutas aquí
 
         this.app.post('/api/mensaje', (req, res) => {
+
+            send('Controlador Mensaje');
+
             const mensaje = req.body.mensaje || 'Sin contenido';
             this.io.emit('enviar-mensaje', {
                 mensaje,
