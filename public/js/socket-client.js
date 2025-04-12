@@ -6,6 +6,8 @@ const txtMensaje = document.querySelector('#txtMensaje');
 const btnEnviar = document.querySelector('#btnEnviar');
 
 
+console.log("Archivo socket-client");
+
 
 const socket = io();
 
