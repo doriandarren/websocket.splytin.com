@@ -9,7 +9,9 @@ npm init -y
 
 npm i cors
 
-npm i dotenv  --> Hayq ue importar app.js: import 'dotenv/config'
+npm i dotenv        // Hay que importar app.js: import 'dotenv/config'
+
+npm i express       // Express
 
 
 ```
@@ -24,17 +26,37 @@ node app.js
 nodemon app.js
 
 
+
+
 ```
 
 
 
 
-## Express
+## Para plesk
 
 ```sh
 
-npm i express
+npm install -g pm2
 
+
+
+
+pm2 start app.js --name websocket-server                // Start
+pm2 start app.js --name websocket-server --watch        // Con Watch
+pm2 list                                                // Listar
+
+
+// Gestion:
+pm2 stop websocket-server
+pm2 restart websocket-server
+pm2 delete websocket-server
+
+
+
+// Guardar los procesos para que arranquen al reiniciar el servidor:
+pm2 save
+pm2 startup
 
 ```
 
