@@ -52,15 +52,15 @@ export class MyServer {
         // podés agregar más rutas aquí
 
         this.app.post('/api/mensaje', (req, res) => {
-
-            send('Controlador Mensaje');
-
             const mensaje = req.body.mensaje || 'Sin contenido';
             this.io.emit('enviar-mensaje', {
                 mensaje,
                 fecha: new Date().getTime(),
                 origen: 'POSTMAN'
             });
+
+            send('Controlador Mensaje');
+
             res.json({ ok: true, mensaje: 'Mensaje enviado por POST' });
         });
 
