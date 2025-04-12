@@ -1,32 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Socket Client</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
-
+  <meta charset="UTF-8">
+  <title>Cliente WebSocket</title>
 </head>
-<body class="container">
+<body>
+  <h1>Cliente externo</h1>
+  <input id="txtMensaje" placeholder="Mensaje">
+  <button id="btnEnviar">Enviar</button>
 
-    <h1 class="mt-2">
-        Server
-    </h1>
+  <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
+  <script>
+    //const socket = io("http://localhost:8080"); // ⚠️ cambiar si está en otra IP o puerto
+    const socket = io("https://websocket.splytin.com",  {
+      transports: ["websocket"]
+    }); // ⚠️ cambiar si está en otra IP o puerto
+ 
+    socket.on('connect', () => {
+      console.log("✅ Conectado al servidor");
+    });
 
-     <hr>
+    socket.on('enviar-mensaje', payload => {
+      console.log("Mensaje recibido:", payload);
+    });
 
-    <p>
-        Server Status:
-        <span id="lblOnline" class="text-success">Online</span>
-        <span id="lblOffline" class="text-danger">Offline</span>
-    </p>
-
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
-
-
+    document.getElementById('btnEnviar').addEventListener('click', () => {
+      const mensaje = document.getElementById('txtMensaje').value;
+      socket.emit('enviar-mensaje', {
+        mensaje,
+        fecha: new Date().toISOString(),
+        origen: 'HTML externo'
+      });
+    });
+  </script>
 </body>
 </html>
