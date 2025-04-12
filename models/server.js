@@ -3,86 +3,81 @@ import cors from 'cors';
 import { Server } from "socket.io";
 import { createServer } from 'http';
 
-
-
 export class MyServer {
     
     constructor() {
-
         this.app = express();
-        this.port = process.env.PORT;
-
+        this.port = process.env.PORT || 8080;
 
         this.server = createServer(this.app);
         this.io = new Server(this.server, {
-            //transports: ["websocket"], // 👈 Forzamos el uso exclusivo de WebSocket
             cors: {
                 origin: '*',
                 methods: ['GET', 'POST']
             }
         });
 
-        
-        
-        this.paths = {};
+        this.paths = {
+            test: '/api/test',
+        };
 
-        // Midlewares
-        this.midlewares();
+        // Middlewares
+        this.middlewares();
 
-        // Rutas app
+        // Rutas HTTP
         this.routes();
-
 
         // Sockets
         this.sockets();
     }
 
+    middlewares() {
+        this.app.use(cors());
+        this.app.use(express.json()); // 👈 por si hacés POST
+        this.app.use(express.static('public'));
+    }
 
+    routes() {
+        this.app.get(this.paths.test, (req, res) => {
+            res.json({
+                ok: true,
+                mensaje: 'Servidor funcionando correctamente ✅'
+            });
+        });
 
-    midlewares(){
+        // podés agregar más rutas aquí
 
-        //Cors
-        this.app.use( cors() ) 
+        this.app.post('/api/mensaje', (req, res) => {
+            const mensaje = req.body.mensaje || 'Sin contenido';
+            this.io.emit('enviar-mensaje', {
+                mensaje,
+                fecha: new Date().getTime(),
+                origen: 'POSTMAN'
+            });
+            res.json({ ok: true, mensaje: 'Mensaje enviado por POST' });
+        });
 
-
-        // Directorio publico
-        this.app.use( express.static('public') );
 
     }
 
-
-    routes(){
-        
-        //this.app.use( this.userPath , userRoutes)
-        
-    }
-
-    sockets(){
-
+    sockets() {
         this.io.on('connection', socket => {
+            console.log('Cliente conectado:', socket.id);
 
             socket.on('disconnect', () => {
-                console.log('Cliente desconectado', socket.id);
+                console.log('Cliente desconectado:', socket.id);
             });
 
-
-            socket.on('enviar-mensaje', ( payload ) => {
-
-                this.io.emit('enviar-mensaje', payload)
-
-            })
-
-
-        });
-
-
-    }
-
-
-    listen(){
-        this.server.listen( this.port, ()=> {
-            console.log(`Servidor ejecutandose en el puerto: ${ this.port }`);
+            socket.on('enviar-mensaje', payload => {
+                console.log('Mensaje recibido:', payload);
+                this.io.emit('enviar-mensaje', payload);
+            });
         });
     }
 
+    listen() {
+        this.server.listen(this.port, () => {
+            console.log(`Servidor ejecutándose en el puerto: ${this.port}`);
+        });
+    }
 }
