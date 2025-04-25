@@ -10,12 +10,11 @@
   <button id="btnEnviar">Enviar</button>
 
   <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
+
+  
   <script>
-    //const socket = io("http://localhost:8080"); // ⚠️ cambiar si está en otra IP o puerto
-    const socket = io(); // ⚠️ cambiar si está en otra IP o puerto
-    // const socket = io("https://websocket.splytin.com",  {
-    //   transports: ["websocket"]
-    // }); // ⚠️ cambiar si está en otra IP o puerto
+
+    const socket = io(); 
  
     socket.on('connect', () => {
       console.log("✅ Conectado al servidor");
