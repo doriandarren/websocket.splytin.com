@@ -3,34 +3,86 @@
 <head>
   <meta charset="UTF-8">
   <title>Cliente WebSocket</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 <body>
-  <h1>Cliente externo</h1>
-  <input id="txtMensaje" placeholder="Mensaje">
-  <button id="btnEnviar">Enviar</button>
 
+  <div class="m-10">
+
+
+    <h1 class="text-3xl font-bold underline">
+      Cliente externo
+      <span>On</span>
+      <span>Off</span>
+    </h1>
+
+
+    <div class="flex gap-6 mt-10">
+
+      <div>
+        <label for="first-name" class="block text-sm/6 font-semibold text-gray-900">First name</label>
+        <div class="mt-2.5">
+          <input 
+            autocomplete="given-name" 
+            class="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
+            id="txtMensaje" 
+            placeholder="Mensaje"
+          >
+        </div>
+      </div>
+      
+      <div class="mt-8">
+        <button 
+          id="btnEnviar"
+          class="rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400"
+        >
+          Enviar
+        </button>
+
+      </div>
+      
+    </div>
+
+   
+    <div class="flex mt-10">
+      <textarea 
+        rows="15"
+        class="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
+        id="div_response"
+      ></textarea>
+    </div>
+
+  </div>
+
+  
   <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
 
   
   <script>
 
     const socket = io(); 
+
+    const div_response = document.querySelector("#div_response");
+    const div_txt_msg = document.getElementById('txtMensaje');
+
  
     socket.on('connect', () => {
       console.log("✅ Conectado al servidor");
     });
 
     socket.on('enviar-mensaje', payload => {
-      console.log("Mensaje recibido:", payload);
+      //console.log("Mensaje recibido:", payload);
+      div_response.value += `[${payload.fecha}] ${payload.origen}: ${payload.mensaje}\n`;
     });
 
     document.getElementById('btnEnviar').addEventListener('click', () => {
-      const mensaje = document.getElementById('txtMensaje').value;
+      const mensaje = div_txt_msg.value;
       socket.emit('enviar-mensaje', {
         mensaje,
         fecha: new Date().toISOString(),
         origen: 'HTML externo'
       });
+      div_txt_msg.value = '';
     });
   </script>
 </body>
