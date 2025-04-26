@@ -1,5 +1,5 @@
 
-const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1319318553677004810/Yb7QE6vfM6BTjzTXs93e4LVxz4IRan2WT95yQiHBPdajkHuusZHsF6Ld047GY5hO1DWz';
+const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1365685641773322250/BRKD26u3L4Pvpm7-fsgS7p214PrnQQ1iHmMlZwg-ufZ7BDHoUxN_NIDHC2ShUruJq4ph';
 
 
 export const send = async(msg) => {
